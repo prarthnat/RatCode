@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="codeQualityApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RatCode: Quality Scorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;700&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-content">
+            <h1><span class="site-name">RatCode</span> <span class="tagline">Quality Scorer</span></h1>
+            <p>Paste your code, get instant quality insights.</p>
+        </div>
+    </header>
+
+    <main ng-controller="CodeQualityController" class="container">
+        <section class="input-section card">
+            <h2>Your Code Here</h2>
+            <textarea
+                class="code-input"
+                ng-model="codeToAnalyze"
+                placeholder="Start typing or paste your code (e.g., JavaScript, Python, Java)..."
+                rows="18"
+            ></textarea>
+            <button class="analyze-button" ng-click="analyzeCode()" ng-disabled="!codeToAnalyze || analyzing">
+                <span ng-if="!analyzing">Analyze Code</span>
+                <span ng-if="analyzing">Analyzing...</span>
+            </button>
+            <p ng-if="message" class="feedback-message">{{ message }}</p>
+        </section>
+
+        <section ng-if="analysisResult" class="results-section">
+            <h2 class="results-heading">Analysis Summary</h2>
+
+            <div class="score-overview-container">
+                <div class="score-card {{ analysisResult.overallScoreClass }}">
+                    <h3>Overall Score</h3>
+                    <p class="score-value">{{ analysisResult.score }}<span>%</span></p>
+                    <span class="score-status">{{ analysisResult.status }}</span>
+                </div>
+
+                <div class="metrics-grid card">
+                    <div class="metric-item">
+                        <h4>Lines of Code (LOC)</h4>
+                        <p>{{ analysisResult.metrics.loc }}</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Readability</h4>
+                        <p>{{ analysisResult.metrics.readability }}</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Maintainability</h4>
+                        <p>{{ analysisResult.metrics.maintainability }}</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Time Complexity</h4>
+                        <p>{{ analysisResult.metrics.timeComplexity }}</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Space Complexity</h4>
+                        <p>{{ analysisResult.metrics.spaceComplexity }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="issues-list card">
+                <h3>Identified Issues ({{ analysisResult.issues.length }})</h3>
+                <p ng-if="analysisResult.issues.length === 0" class="no-issues">
+                    <span class="icon">✨</span> No significant issues found. Your code looks great!
+                </p>
+                <ul ng-if="analysisResult.issues.length > 0">
+                    <li ng-repeat="issue in analysisResult.issues" class="issue-item {{ issue.severity }}">
+                        <span class="severity-badge">{{ issue.severity | uppercase }}</span>
+                        <p class="issue-description">{{ issue.description }}</p>
+                        <span class="issue-location">Line: {{ issue.line }}</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 RatCode. All rights reserved.</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

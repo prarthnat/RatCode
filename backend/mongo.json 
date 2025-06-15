@@ -1,0 +1,19 @@
+{
+    "_id": ObjectId("655f9a6d4e5f6g7h8i9j0k1l"),
+    "code": "/* The full code submitted for analysis */\nfunction calculateSum(a, b) {\n  return a + b;\n}",
+    "score": 88,
+    "status": "Excellent",
+    "metrics": {
+        "loc": 3,
+        "readability": 12.5,
+        "maintainability": 92
+    },
+    "issues": [
+        {
+            "severity": "info",
+            "description": "Consider adding a JSDoc comment for better documentation.",
+            "line": 1
+        }
+    ],
+    "timestamp": ISODate("2024-06-14T18:30:00.000Z")
+}
