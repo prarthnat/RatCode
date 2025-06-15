@@ -11,12 +11,17 @@ const port = 3000; // Your chosen port
 app.use(cors()); // Enable CORS for all requests
 app.use(express.static(path.join(__dirname, '../frontend'))); // Serve static files from frontend directory
 app.use(bodyParser.json()); // Parse JSON request bodies
-
 // --- MongoDB Connection Setup ---
-mongoose.connect('mongodb://localhost:27017/codeSenseDB') // Your MongoDB connection string
+/*mongoose.connect('mongodb://localhost:27017/codeSenseDB') // Your MongoDB connection string
     .then(() => console.log('MongoDB connected successfully to codeSenseDB'))
-    .catch(err => console.error('MongoDB connection error:', err, 'Is MongoDB server running?'));
-
+    .catch(err => console.error('MongoDB connection error:', err, 'Is MongoDB server running?')); */
+    require('dotenv').config(); // Load environment variables from .env file
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log("MongoDB Error: ", err));
 // --- Define MongoDB Schema and Model for Analysis Results ---
 const analysisResultSchema = new mongoose.Schema({
     code: {
