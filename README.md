@@ -85,7 +85,7 @@ npm install
 node server.js
 cd ../frontend  # from the root directory
 ```
-# Do not open index.html directly in your browser as you could see cors permission problem
+# Do not open index.html directly in your browser as you could see cors permission issue
 # follow the link provided during backend's server run to use the site
 #This will usually open the application in your default web browser at http://localhost:3000 (or another available port). Ensure the frontend is configured to communicate with your running backend (the URL from step 3 of Backend Setup).
  --- 
