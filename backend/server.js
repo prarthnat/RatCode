@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-const port = 3000; // Your chosen port
+const port = process.env.PORT || 5000;; // Your chosen port
 
 // --- Middleware Setup ---
 app.use(cors()); // Enable CORS for all requests
